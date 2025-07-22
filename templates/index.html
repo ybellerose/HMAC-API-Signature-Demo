@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMAC/MITM Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-2xl font-bold mb-6 text-center">Asymmetric Signature MITM Demo</h1>
+        {% if section == 'post' %}
+        <form method="post" class="space-y-4">
+            <h2 class="text-xl font-semibold">1. POST Payload</h2>
+            <div class="text-gray-600 text-sm mb-2 bg-blue-50 p-2 rounded">
+                Enter a JSON payload and submit. This will be signed with your private key and sent to the Man in the Middle (MITM) phase.
+            </div>
+            <textarea name="payload" rows="6" class="w-full border rounded p-2" placeholder='{"foo": "bar", "number": 123}' required>{{ payload }}</textarea>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Sign & Send to MITM</button>
+        </form>
+        {% elif section == 'mitm' %}
+        <form method="post" class="space-y-4">
+            <h2 class="text-xl font-semibold">2. Man in the Middle (MITM)</h2>
+            <div class="text-yellow-700 text-sm mb-2 bg-yellow-50 p-2 rounded">
+                <strong>Intercept and modify:</strong> Here you can view and <span class="font-semibold">edit the payload or the signature</span> before forwarding to the endpoint. This simulates a man-in-the-middle attack or legitimate proxy. Try changing the payload or signature to see how the endpoint reacts!
+            </div>
+            <label class="block font-medium">Payload:</label>
+            <textarea name="payload" rows="6" class="w-full border rounded p-2">{{ payload }}</textarea>
+            <label class="block font-medium">Signature (base64):</label>
+            <input name="signature" class="w-full border rounded p-2" value="{{ signature }}">
+            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Forward to Endpoint</button>
+        </form>
+        {% elif section == 'response' %}
+        <div class="space-y-4">
+            <h2 class="text-xl font-semibold">3. Endpoint Response</h2>
+            <div class="text-green-700 text-sm mb-2 bg-green-50 p-2 rounded">
+                This section shows the payload and signature sent to the endpoint, and the endpoint's response. If the payload or signature was modified, the endpoint will likely reject the request.
+            </div>
+            <div>
+                <span class="font-medium">Payload sent:</span>
+                <pre class="bg-gray-100 p-2 rounded max-h-40 overflow-auto break-all">{{ payload }}</pre>
+            </div>
+            <div>
+                <span class="font-medium">Signature sent:</span>
+                <pre class="bg-gray-100 p-2 rounded max-h-40 overflow-x-auto break-all">{{ signature }}</pre>
+            </div>
+            <div>
+                <span class="font-medium">Endpoint response:</span>
+                <pre class="bg-green-100 p-2 rounded max-h-40 overflow-x-auto break-all">{{ response }}</pre>
+            </div>
+            <a href="/" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Start Over</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html> 
