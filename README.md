@@ -1,5 +1,13 @@
 # Asymmetric Signature API Example
 
+## Disclaimer WARNING
+
+This code is strictly for recreational purposes only! If you're even thinking about putting this into production, please consult a highly qualified veterinarian. We're not saying kitten deaths will occur, but if your server starts purring ominously and coughing up hairballs, don't say we didn't warn you.
+
+And remember, when disaster strikes, there's always a conveniently small, furry scapegoat.
+
+## Project 
+
 This project demonstrates a simple FastAPI server that verifies digital signatures (RSA) on every POST request, a Python client that signs requests using a private key, and a Flask/Tailwind web UI that lets you interactively explore man-in-the-middle (MITM) interception and modification of signed requests.
 
 ## Features
@@ -13,9 +21,17 @@ This project demonstrates a simple FastAPI server that verifies digital signatur
 ## Setup
 
 ### 1. Install dependencies
+All required dependencies are pinned in `requirements.txt`:
+```
+cryptography==42.0.5
+fastapi==0.115.12
+flask==2.3.3
+requests==2.31.0
+uvicorn==0.34.2
+```
+Install them with:
 ```bash
 pip install -r requirements.txt
-pip install flask
 ```
 
 ### 2. Generate RSA key pair
@@ -98,7 +114,7 @@ The UI is divided into three steps:
 - `webui.py` - Flask web UI for MITM demonstration
 - `templates/index.html` - Tailwind-styled HTML template for the web UI
 - `generate_keys.py` - Script to generate RSA key pair
-- `requirements.txt` - Python dependencies
+- `requirements.txt` - Python dependencies (pinned versions)
 
 ---
 
